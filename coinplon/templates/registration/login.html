@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+
+{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+    {% else %}
+    <p>Please login to see this page.</p>
+    {% endif %}
+{% endif %}
+
+
+
+
+<div class="container">
+    
+    <main class="form-signin w-100 m-auto">
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+      <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+  
+      <div class="form-floating">
+        {{form.username|add_class:"form-control"|attr:"id:floatingInput"|attr:"placeholder:name@example.com"}}
+        <label for="floatingInput">Email address</label>
+      </div>
+      <div class="form-floating">
+        {{form.password|add_class:"form-control"|attr:"id:floatingPassword"|attr:"placeholder:password"}}
+        <label for="floatingPassword">Password</label>
+      </div>
+  
+      <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+      </div>
+      <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+
+    </form>
+</main>
+<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+</div>
+
+{% endblock %}
